@@ -1,0 +1,59 @@
+{% extends "base.html" %} {% block title %}Microblog – Home{% endblock %} {%
+block content %}
+
+<section>
+  <h1>Add new entry</h1>
+
+  <form class="form" method="POST">
+    <p class="form__input">
+      <label for="entry" class="form__label">Entry contents:</label>
+      <textarea name="content" id="entry" class="form__textarea"></textarea>
+    </p>
+
+    <button type="submit" class="btn btn-primary">Add entry</button>
+  </form>
+</section>
+
+<section>
+  <h1>Recent posts</h1>
+
+  {% for entry in entries %}
+  <article class="entry">
+    <div class="entry__header">
+      <div>
+        <h2 class="entry__title">
+          {{ (entry[1] or "") | truncate(30, true) }}
+        </h2>
+        <time class="entry__date" datetime="{{ entry[2] }}">
+          • {{ entry[2] }}
+        </time>
+      </div>
+
+      <div class="entry__actions">
+        <!-- Edit -->
+        <a
+          href="{{ url_for('edit_entry', id=entry[0]) }}"
+          class="btn btn-sm btn-outline-primary me-1"
+          title="Edit"
+        >
+          <i class="bi bi-pencil-square"></i>
+        </a>
+
+        <!-- Delete -->
+        <a
+          href="{{ url_for('delete_entry', id=entry[0]) }}"
+          class="btn btn-sm btn-outline-danger"
+          title="Delete"
+          onclick="return confirm('Delete this entry?');"
+        >
+          <i class="bi bi-trash"></i>
+        </a>
+      </div>
+    </div>
+
+    <p class="entry__content">{{ entry[1] }}</p>
+  </article>
+  {% endfor %}
+</section>
+
+{% endblock %}

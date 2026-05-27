@@ -1,0 +1,22 @@
+{% extends "base.html" %} {% block title %}Edit entry{% endblock %} {% block
+content %}
+
+<div class="container">
+  <h1 class="mb-3">Edit entry</h1>
+
+  <form method="POST">
+    <div class="row mb-3">
+      <div class="col-12">
+        <textarea name="content" rows="6" class="form__textarea form-control">
+{{ entry[1] }}</textarea
+        >
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+
+    <a href="{{ url_for('home') }}" class="btn btn-secondary ms-2"> Cancel </a>
+  </form>
+</div>
+
+{% endblock %}
