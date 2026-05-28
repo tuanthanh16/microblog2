@@ -24,15 +24,20 @@ conn.close()
 def home():
         if request.method == "POST":
             entry_content = request.form.get("content")
-            formatted_date = datetime.datetime.today().strftime("%Y-%m-%d")
-            # Insert user into the database
-            conn = sqlite3.connect('data/microblog2.db')
-            cursor = conn.cursor()
-            cursor.execute('INSERT INTO entries (content, date) VALUES (?, ?)', (entry_content, formatted_date))
-            conn.commit()
-            conn.close()
-            return redirect(url_for('home'))
-        # else read data
+            # check if entry_content =""
+            if (entry_content == ""):
+                print('Empty content! Returning to home page without saving')
+                return redirect(url_for('home'))
+            else:     
+                formatted_date = datetime.datetime.today().strftime("%Y-%m-%d")
+                # Insert user into the database
+                conn = sqlite3.connect('data/microblog2.db')
+                cursor = conn.cursor()
+                cursor.execute('INSERT INTO entries (content, date) VALUES (?, ?)', (entry_content, formatted_date))
+                conn.commit()
+                conn.close()
+                return redirect(url_for('home'))
+        # else GET method, read data
         conn = sqlite3.connect('data/microblog2.db')
         cursor = conn.cursor()
         cursor.execute('SELECT * FROM entries')
