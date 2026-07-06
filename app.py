@@ -10,11 +10,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-# check if database exists, if not create
-with app.app_context():
-    if not os.path.exists("microblog.db"):
-        db.create_all()
-
 # model the Task database
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -23,6 +18,11 @@ class Post(db.Model):
 
     def __repr__(self):
         return f'<Post {self.content}>'
+
+# check if database exists, if not create
+with app.app_context():
+    db.create_all()
+
 
 
 
